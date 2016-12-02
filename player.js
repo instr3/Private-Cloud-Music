@@ -22,7 +22,17 @@ $(function() {
 		playlist : $('#playlist'),
 		folderlist : $('#folderlist'),
 		nowPlaying : $('#nowPlaying'),
-		
+		updatePlayingSong: function() {
+			$('.backimg').fadeOut('slow',function(){$(this).remove()});
+			var image = new Image();
+			image.onload = function(){
+				$backimg=$('<div class="w3-container backimg" style="background-image:url('
+				+ image.src + ');" hidden></div>');
+			   	$('#backcontainer').append($backimg);
+				$backimg.fadeIn('slow');
+			};
+			image.src = Player.audio.src + '.jpg';
+		},
 		playAtIndex: function(i) {
 			Player.audio.pause(); // neccessary ?
 			Player.currentIndex = i;
@@ -31,7 +41,7 @@ $(function() {
 			Player.audio.play();
 			window.history.replaceState("","Test Title","#/"+Player.path+Player.data[Player.currentIndex]+"/"); // title seems be fucked.
 			Player.nowPlaying.html(decodeURIComponent(Player.data[Player.currentIndex]));
-			$('#backimg').css("background-image","url(" + (Player.path + Player.data[i]) + ".jpg)");
+			Player.updatePlayingSong();
 		},
 		
 		freshFolderlist: function() {
@@ -111,6 +121,7 @@ $(function() {
 				Player.audio.src = (Player.path + urlMatch[2]);
 				Player.audio.play();
 				Player.nowPlaying.html(decodeURIComponent(urlMatch[2]));
+				Player.updatePlayingSong();
 			}
 			// Only match folder name.
 			if (!isUrlMatched) {
