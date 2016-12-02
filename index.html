@@ -5,8 +5,11 @@
 <link rel="stylesheet" href="./w3.css">
 <script src="./jquery-3.0.0.min.js"></script>
 <style>.w3-sidenav ul li { padding-left: 2px;}</style>
-
-<nav class="w3-sidenav w3-collapse w3-light-grey w3-animate-left w3-card-2" style="z-index: 3; width: 250px; display: none;" id="mySidenav">
+<body style="background:#ffffff;" class="modbr">
+<div class="w3-container" id="backimg" style="position: absolute;height:100%;width:100%;padding:0;background:url() no-repeat fixed center;background-size:cover;opacity:0.5;">
+</div>
+<div class="w3-container" style="position: absolute;height:100%;width:100%;padding:0;opacity:0.7;">
+<nav class="w3-sidenav w3-collapse w3-light-grey w3-animate-left w3-card-2" style="z-index: 3; width: 250px; display: none;position: absolute" id="mySidenav">
 <header class="w3-container w3-dark-grey">
 	<h2>Folders <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-hide-large w3-closenav" title="close sidenav">×</a></h2>
 </header>
@@ -63,4 +66,6 @@ function w3_close() {
     document.getElementById("myOverlay").style.display = "none";
 }
 </script>
+</div>
+</body>
 </html>

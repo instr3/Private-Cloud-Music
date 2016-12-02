@@ -31,6 +31,7 @@ $(function() {
 			Player.audio.play();
 			window.history.replaceState("","Test Title","#/"+Player.path+Player.data[Player.currentIndex]+"/"); // title seems be fucked.
 			Player.nowPlaying.html(decodeURIComponent(Player.data[Player.currentIndex]));
+			$('#backimg').css("background-image","url(" + (Player.path + Player.data[i]) + ".jpg)");
 		},
 		
 		freshFolderlist: function() {
