@@ -8,9 +8,6 @@
 	function GIVEMETHEFUCKINGUTF8($text) {
 		return iconv(mb_detect_encoding($text, mb_detect_order(), true), "UTF-8", $text);
     }
-	function GIVEMETHEFUCKINGGB2312($text) {
-		return iconv(mb_detect_encoding($text, mb_detect_order(), true), "gb2312", $text);
-    }
 	
 	function getFileExtension($fileName) {
 		$explodeArr = explode('.',$fileName);
@@ -27,14 +24,22 @@
 				$utf8FileName = GIVEMETHEFUCKINGUTF8($oneFileName);
 				$oneFilePath = $songFolderPath."/".$oneFileName;
 				// Check ignore strategy config file?
-				if (is_dir($oneFilePath) /* && file_exists($oneFilePath."/GetPlaylist.php") */) {
+				if (is_dir($oneFilePath)) {
 					array_push($folderList, rawurlencode($utf8FileName));
 				}
 			}
 			exit(json_encode($folderList));
 		case "getplaylist":
 			if(!isset($_POST['folder'])) exit("[]");
-			$fileList = scandir($songFolderPath."/".GIVEMETHEFUCKINGGB2312(rawurldecode($_POST['folder']))); 
+			$actualSongFolder="";
+			$fileList = scandir($songFolderPath);
+			foreach($fileList as $oneFileName) {
+				if (rawurlencode(GIVEMETHEFUCKINGUTF8($oneFileName))."/"==$_POST['folder']) {
+					$actualSongFolder=$songFolderPath."/".$oneFileName;
+					break;
+				}
+			}
+			$fileList = scandir($actualSongFolder);
 			$musicList = array();
 			foreach($fileList as $oneFileName) {
 				if (getFileExtension(GIVEMETHEFUCKINGUTF8($oneFileName)) == 'mp3') {
